@@ -1,0 +1,55 @@
+/* Styles for the dark theme. */
+.dark body {
+    background-color: #111827;
+    color: #d1d5db;
+}
+
+.dark header,
+.dark .bg-gray-800 {
+    background-color: #1f2937;
+    border-bottom-color: #374151 !important;
+}
+
+.dark .bg-white,
+.dark .border {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+.dark .text-slate-50 {
+    color: #f9fafb !important;
+}
+
+.dark .text-gray-800 {
+    color: #f9fafb !important;
+}
+
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-slate-400 {
+    color: #9ca3af !important;
+}
+
+.dark input,
+.dark select,
+.dark .bg-gray-100 {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f9fafb !important;
+}
+
+.dark input::placeholder {
+    color: #6b7280 !important;
+}
+
+.dark .bg-gray-700 {
+    background-color: #374151 !important;
+}
+
+.dark .bg-blue-500 {
+    background-color: #3b82f6 !important;
+}
+.dark .text-sky-500 {
+    color: #0ea5e9 !important;
+    border-bottom-color: #0ea5e9 !important;
+}
