@@ -1,0 +1,12 @@
+{% extends "layouts/base.html" %}
+{% set title = "Welcome" %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-50 mb-4">Welcome to Restaurant Billing POS and Analytical Dashboard</h2>
+    <p class="text-gray-600 dark:text-gray-400 mb-6">Streamline your restaurant operations with our intuitive Point of Sale system.</p>
+    <div class="space-y-4">
+        <a href="{{ url_for('view.dashboard') }}" class="block bg-blue-600 dark:bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600">Guest/User Mode</a>
+        <a href="{{ url_for('auth.admin_login_page') }}" class="block bg-gray-600 dark:bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600">Admin Login</a>
+    </div>
+</div>
+{% endblock %}
