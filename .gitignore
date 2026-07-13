@@ -1,0 +1,5 @@
+# Ignore instance folder
+instance/
+
+# Ignore all __pycache__ folders anywhere
+**/__pycache__/
