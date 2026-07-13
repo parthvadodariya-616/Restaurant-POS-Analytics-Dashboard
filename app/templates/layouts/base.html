@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Restaurant Billing POS and Analytical Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dark_theme.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&family=Inter%3Awght%40400%3B500%3B700%3B900&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+</head>
+
+<body class="bg-slate-50 dark:bg-gray-900" style="font-family: Inter, 'Noto Sans', sans-serif;">
+    
+    {% block header %}
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf4] dark:border-b-gray-700 px-10 py-3 bg-white dark:bg-gray-800">
+        <a href="/" class="flex items-center gap-4 text-[#0d141c] dark:text-gray-50">
+            <div class="size-4">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path></svg>
+            </div>
+            <h2 class="text-[#0d141c] dark:text-gray-50 text-lg font-bold leading-tight tracking-[-0.015em]">Restaurant Billing POS and Analytical Dashboard</h2>
+        </a>
+        <div class="flex flex-1 justify-end items-center gap-8">
+             <nav class="flex space-x-4 items-center">
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                <a href="{{ url_for('view.dashboard') }}" class="text-[#49739c] dark:text-gray-400 hover:text-black dark:hover:text-white text-sm font-medium">Dashboard</a>
+                <a href="{{ url_for('view.admin_panel') }}" class="text-[#49739c] dark:text-gray-400 hover:text-black dark:hover:text-white text-sm font-medium">Menu</a>
+                <a href="{{ url_for('view.analytics') }}" class="text-[#49739c] dark:text-gray-400 hover:text-black dark:hover:text-white text-sm font-medium">Reports</a>
+                <a href="{{ url_for('auth.logout') }}" class="text-[#49739c] dark:text-gray-400 hover:text-black dark:hover:text-white text-sm font-medium">Logout</a>
+                {% else %}
+                <a href="{{ url_for('auth.admin_login_page') }}" class="text-[#49739c] dark:text-gray-400 hover:text-black dark:hover:text-white text-sm font-medium">Admin Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    {% endblock %}
+
+    <main class="gap-1 px-6 flex flex-1 justify-center py-5">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

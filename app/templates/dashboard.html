@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+{% set title = "Dashboard" %}
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="col-span-2">
+            <h2 class="text-[#0d141c] dark:text-gray-50 tracking-light text-[28px] font-bold leading-tight px-4 text-left pb-3 pt-5">Order Management</h2>
+
+            <div class="flex px-4 py-3">
+                <div id="order-type-group" class="flex h-10 flex-1 items-center justify-center rounded-lg bg-[#e7edf4] dark:bg-gray-700 p-1">
+                    <label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-600 has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-[#0d141c] dark:has-[:checked]:text-white text-[#49739c] dark:text-gray-400 text-sm font-medium leading-normal">
+                        <span class="truncate">Dine-In</span>
+                        <input type="radio" name="orderType" class="invisible w-0" value="Dine-In" checked/>
+                    </label>
+                    <label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-600 has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-[#0d141c] dark:has-[:checked]:text-white text-[#49739c] dark:text-gray-400 text-sm font-medium leading-normal">
+                        <span class="truncate">Takeaway</span>
+                        <input type="radio" name="orderType" class="invisible w-0" value="Takeaway" />
+                    </label>
+                    <label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-600 has-[:checked]:shadow-[0_0_4px_rgba(0,0,0,0.1)] has-[:checked]:text-[#0d141c] dark:has-[:checked]:text-white text-[#49739c] dark:text-gray-400 text-sm font-medium leading-normal">
+                        <span class="truncate">Delivery</span>
+                        <input type="radio" name="orderType" class="invisible w-0" value="Delivery" />
+                    </label>
+                </div>
+            </div>
+
+            <div id="menu-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
+                <p class="col-span-full text-center text-gray-500 dark:text-gray-400">Loading menu...</p>
+            </div>
+        </div>
+
+        <div class="col-span-1">
+             <h3 class="text-xl font-semibold text-[#0d141c] dark:text-gray-50 mb-4 pt-5">Order Summary</h3>
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th class="p-2 text-sm text-[#49739c] dark:text-gray-400 font-medium">Item</th>
+                            <th class="p-2 text-sm text-[#49739c] dark:text-gray-400 font-medium text-center">Qty</th>
+                            <th class="p-2 text-sm text-[#49739c] dark:text-gray-400 font-medium text-right">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items"></tbody>
+                </table>
+                <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 space-y-2">
+                    <p class="flex justify-between text-[#49739c] dark:text-gray-400 text-sm"><span>Subtotal</span><span id="cart-subtotal">₹0.00</span></p>
+                    <p class="flex justify-between text-[#49739c] dark:text-gray-400 text-sm"><span>GST (5%)</span><span id="cart-gst">₹0.00</span></p>
+                    <p class="flex justify-between font-bold text-[#0d141c] dark:text-gray-50"><span>Total</span><span id="cart-total">₹0.00</span></p>
+                </div>
+                <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex space-x-4">
+                    <button id="checkout-btn" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-bold" disabled>Generate Bill</button>
+                    <button id="clear-cart-btn" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 text-sm font-bold">Clear Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="customer-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+        <h3 class="text-xl font-bold text-[#0d141c] dark:text-gray-50 mb-4">Customer Details</h3>
+        <form id="customer-form" class="space-y-4">
+            <div>
+                <label for="customer-name" class="block text-sm font-medium text-[#49739c] dark:text-gray-400">Name</label>
+                <input type="text" id="customer-name" name="name" class="mt-1 w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 dark:text-gray-50" required>
+            </div>
+            <div>
+                <label for="customer-phone" class="block text-sm font-medium text-[#49739c] dark:text-gray-400">Phone Number (10 digits)</label>
+                <input type="tel" id="customer-phone" name="phone" class="mt-1 w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 dark:text-gray-50" required>
+                <p id="phone-error" class="text-red-500 text-sm mt-1 hidden">Please enter a valid 10-digit phone number.</p>
+            </div>
+            <div class="flex justify-end space-x-4 pt-4">
+                <button type="button" id="cancel-modal-btn" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-[#0d141c] dark:text-gray-50 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 text-sm font-bold">Cancel</button>
+                <button type="submit" id="submit-order-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-bold" disabled>Proceed to Payment</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

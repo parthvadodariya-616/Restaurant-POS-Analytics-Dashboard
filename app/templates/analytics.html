@@ -1,0 +1,86 @@
+{% extends "layouts/base.html" %}
+{% set title = "Analytics" %}
+{% block content %}
+<div class="layout-content-container flex flex-col max-w-[1400px] flex-1">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center p-4">
+        <p class="text-[#0d141c] dark:text-gray-50 tracking-light text-[32px] font-bold">Sales Analytics</p>
+        <div class="flex items-center gap-3">
+            <button data-range="1d" class="range-btn bg-blue-500 text-white px-4 py-2 rounded-lg font-medium">Today</button>
+            <button data-range="7d" class="range-btn bg-gray-300 dark:bg-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg font-medium">Last 7 Days</button>
+            <button data-range="30d" class="range-btn bg-gray-300 dark:bg-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg font-medium">Last 30 Days</button>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <p class="text-gray-500 text-sm">Total Sales</p>
+            <p id="kpi-total-sales" class="text-2xl font-bold">₹0</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <p class="text-gray-500 text-sm">Total Orders</p>
+            <p id="kpi-total-orders" class="text-2xl font-bold">0</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <p class="text-gray-500 text-sm">Average Order Value</p>
+            <p id="kpi-avg-order" class="text-2xl font-bold">₹0</p>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 mt-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <h3 class="text-xl font-semibold mb-4">Sales Trends</h3>
+            <canvas id="salesChart" class="h-64"></canvas>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <h3 class="text-xl font-semibold mb-4">Sales by Order Type</h3>
+            <canvas id="orderTypeChart" class="h-64"></canvas>
+        </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 px-4 mt-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <h3 class="text-xl font-semibold mb-4">Sales by Payment Method</h3>
+            <canvas id="paymentMethodChart" class="h-64"></canvas>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <h3 class="text-xl font-semibold mb-4">Top Selling Items</h3>
+            <canvas id="topItemsChart" class="h-64"></canvas>
+        </div>
+    </div>
+
+    <!-- All Items Table -->
+    <div class="px-4 mt-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold">All Items Sales Count</h3>
+                <button id="export-items-btn"
+                    class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                    Export CSV
+                </button>
+            </div>
+            <div class="overflow-y-auto max-h-64">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-gray-300 dark:border-gray-700">
+                            <th class="py-2">Item</th>
+                            <th class="py-2">Quantity Sold</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-items-table"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+{% endblock %}

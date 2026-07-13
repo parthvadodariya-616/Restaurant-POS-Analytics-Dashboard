@@ -1,0 +1,23 @@
+{% extends "layouts/base.html" %}
+{% set title = "Admin Login" %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-50 mb-4">Admin Login</h2>
+    <form id="adminLoginForm" class="space-y-4">
+        <div class="input-box">
+            <label class="block text-sm text-gray-600 dark:text-gray-400">Username</label>
+            <input name="username" type="text" class="w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50" required>
+        </div>
+        <div class="input-box">
+            <label class="block text-sm text-gray-600 dark:text-gray-400">Password</label>
+            <input name="password" type="password" class="w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50" required>
+        </div>
+        <p id="login-error" class="text-red-500 dark:text-red-400 text-sm"></p>
+        <button type="submit" class="w-full bg-blue-600 dark:bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600">Login</button>
+    </form>
+    <a href="{{ url_for('view.login_page') }}" class="block mt-4 text-center text-blue-600 dark:text-blue-400 hover:underline">Back to landing page</a>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}
