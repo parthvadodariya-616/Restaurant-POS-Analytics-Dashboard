@@ -1,3 +1,6 @@
+# note: 
+- This project was completed on june to july 2025 for the acedemic sem 7  15 days of project timeline 
+
 # 🍽 Restaurant POS & Analytics Dashboard
 
 ## 📌 Overview
